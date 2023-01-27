@@ -78,16 +78,27 @@ while True:
 
 
     center = figure[0]
+
     figure_old = deepcopy(figure)
     if rotate:
         for i in range(4):
             x = figure[i].y - center.y
             y = figure[i].x - center.x
             figure[i].x = center.x - x
-            figure[i].y - center.y + y
+            figure[i].y = center.y + y
             if not borders():
                 figure = deepcopy(figure_old)
                 break
+
+    line = H - 1
+    for row in range(H - 1, -1, -1):
+        count = 0
+        for i in range(W):
+            if field[row][i]:
+                count +=1
+            field[line][i] = field[row][i]
+        if count < W:
+            line -= 1
 
     for i in range(4):
         figure_rect.x = figure[i].x * TILE
